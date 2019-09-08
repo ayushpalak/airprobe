@@ -1,0 +1,88 @@
+<html>
+    {% extends 'base.html' %}
+
+    {% block title %}Home{% endblock %}
+    
+    {% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+  
+  $(document).ready(function(){
+    
+    var user = ' {{ user.username }} ';  
+    
+        var settings = {
+          "async": true,
+          "crossDomain": true,
+          "url": "/getEmployeeData",
+          "method": "POST",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "processData": false,
+          "data": `{\"id\":"${user}"}`
+        }
+
+$.ajax(settings).done(function (response) {
+  $("#department").val(response[0]['department']),
+  $("#phone").val(response[0]['phone']),
+  $("#address").val(response[0]['address'])
+  
+});
+
+
+  $("#submitbtn").click(function(){
+
+    var settings = {
+          "async": true,
+          "crossDomain": true,
+          "url": "/updateEmployeeData",
+          "method": "POST",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "processData": false,
+          "data": `{
+              "department": "${$("#department").val()}",
+              "phone": "${$("#phone").val()}",
+              "address": "${$("#address").val()}",
+              "id":"${user}"
+            }`
+        }
+        console.log(settings);
+
+        $.ajax(settings).done(function (response) {
+          console.log(response);
+        });  
+
+  });
+
+    
+      
+      
+        
+      
+      
+    });
+</script>
+
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+  
+  <br><hr>
+    {% csrf_token %}
+    department : <input type = "text" id="department" name="department"></input> <br><hr>
+    phone : <input type = "text" id="phone" name="phone"></input> <br> <hr>
+    address : <input type = "text" id="address" name="address"></input> <br> <hr>
+    
+    <button id="submitbtn"> send </button>
+  
+  
+  <p><a href="{% url 'logout' %}">logout</a></p>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">login</a>
+{% endif %}
+{% endblock %}
+
+</html>
