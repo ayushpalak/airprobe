@@ -1,146 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <style>
+      html,
+      body {
+        height: 100%;
+      }
 
-            html, body {
-    height: 100%;
-}
+      html {
+        display: table;
+        margin: auto;
+      }
 
-html {
-    display: table;
-    margin: auto;
-}
+      body {
+        display: table-cell;
+        vertical-align: middle;
+      }
 
-body {
-    display: table-cell;
-    vertical-align: middle;
-}
+      * {
+        box-sizing: border-box;
+      }
 
-* {
-  box-sizing: border-box;
-}
+      input[type="text"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+      }
 
-input[type=text], select, textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
-}
+      input[type="password"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+      }
 
-input[type=password], select, textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
-}
+      label {
+        padding: 12px 12px 12px 0;
+        display: inline-block;
+      }
 
-label {
-  padding: 12px 12px 12px 0;
-  display: inline-block;
-}
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        /*float: right;*/
+      }
 
-button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  /*float: right;*/
-}
-
-button:hover {
-  background-color: #45a049;
-  color: white;
-}
-
+      button:hover {
+        background-color: #45a049;
+        color: white;
+      }
     </style>
     <title>Register</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
-
-    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script>
-     $(document).ready(function () {
-        $("#submit").click(function(){
-            
-            var email = $("#Email").val()
-            var password = $("#Password").val()
-            var department = $("#Department").val()
-            var phone = $("#Phone").val()
-            var address = $("#Address").val()
-            console.log(email,password,department,phone,address);
+      $(document).ready(function() {
+        $("#submit").click(function() {
+          var email = $("#Email").val();
+          var password = $("#Password").val();
+          var department = $("#Department").val();
+          var phone = $("#Phone").val();
+          var address = $("#Address").val();
+          console.log(email, password, department, phone, address);
 
-            var settings = {
-            "async": true,
-            "crossDomain": true,
-            "url": "/get_name",
-            "method": "POST",
-            "headers": {
-                "content-type": "application/json"
+          var settings = {
+            async: true,
+            crossDomain: true,
+            url: "/get_name",
+            method: "POST",
+            headers: {
+              "content-type": "application/json"
             },
-            "processData": false,
-            "data": `{
+            processData: false,
+            data: `{
                 "email" : "${email}" ,
                 "department" : "${department}" ,
                 "phone" : "${phone}",
                 "address" : "${address}",
                 "password" : "${password}"
                     }`
-            }
+          };
 
-            $.ajax(settings).done(function (response) {
-            
+          $.ajax(settings).done(function(response) {
             console.log(response);
-            if(!response.hasOwnProperty("error")){
-                window.location = "/accounts/login/";
-            }else{
-                alert(JSON.stringify(response['error']));
+            if (!response.hasOwnProperty("error")) {
+              window.location = "/accounts/login/";
+            } else {
+              alert(JSON.stringify(response["error"]));
             }
-            });
-
+          });
         });
-     });
+      });
     </script>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <div class="container">
-        <h2>Registration form</h2>
-        
-            <div class="form-group">
-                <label for="Email">Email:</label>
-                <input type="email" class="form-control" id="Email" placeholder="Enter email" name="Email">
-            </div>
-            <div class="form-group">
-                <label for="Password">Password:</label>
-                <input type="password" class="form-control" id="Password" placeholder="Enter password" name="Password">
-            </div>
-            <div class="form-group">
-                <label for="Department">Department:</label>
-                <input type="text" class="form-control" id="Department" placeholder="Enter Department" name="Department">
-            </div>
-            <div class="form-group">
-                <label for="Phone">Phone:</label>
-                <input type="text" class="form-control" id="Phone" placeholder="Enter Phone" name="Phone">
-            </div>
-            <div class="form-group">
-                <label for="Address">Address:</label>
-                <input type="text" class="form-control" id="Address" placeholder="Enter Address" name="Address">
-            </div>
-            
-            <button style="color: white;"id="submit">Submit</button>
-        
+      <h2>Registration form</h2>
+
+      <div class="form-group">
+        <label for="Email">Email:</label>
+        <input
+          type="email"
+          class="form-control"
+          id="Email"
+          placeholder="Enter email"
+          name="Email"
+        />
+      </div>
+      <div class="form-group">
+        <label for="Password">Password:</label>
+        <input
+          type="password"
+          class="form-control"
+          id="Password"
+          placeholder="Enter password"
+          name="Password"
+        />
+      </div>
+      <div class="form-group">
+        <label for="Department">Department:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="Department"
+          placeholder="Enter Department"
+          name="Department"
+        />
+      </div>
+      <div class="form-group">
+        <label for="Phone">Phone:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="Phone"
+          placeholder="Enter Phone"
+          name="Phone"
+        />
+      </div>
+      <div class="form-group">
+        <label for="Address">Address:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="Address"
+          placeholder="Enter Address"
+          name="Address"
+        />
+      </div>
+
+      <button style="color: white;" id="submit">Submit</button>
     </div>
-
-</body>
-
+  </body>
 </html>
