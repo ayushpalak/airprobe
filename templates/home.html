@@ -1,88 +1,106 @@
 <html>
-    {% extends 'base.html' %}
-
-    {% block title %}Home{% endblock %}
-    
-    {% block content %}
+{% extends 'base.html' %} {% block title %}Home{% endblock %} {% block content %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-  
-  $(document).ready(function(){
-    
-    var user = ' {{ user.username }} ';  
-    
-        var settings = {
-          "async": true,
-          "crossDomain": true,
-          "url": "/getEmployeeData",
-          "method": "POST",
-          "headers": {
-            "content-type": "application/json"
-          },
-          "processData": false,
-          "data": `{\"id\":"${user}"}`
-        }
+  $(document).ready(function () {
 
-$.ajax(settings).done(function (response) {
-  $("#department").val(response[0]['department']),
-  $("#phone").val(response[0]['phone']),
-  $("#address").val(response[0]['address'])
-  
-});
-
-
-  $("#submitbtn").click(function(){
+    var user = ' {{ user.username }} ';
 
     var settings = {
-          "async": true,
-          "crossDomain": true,
-          "url": "/updateEmployeeData",
-          "method": "POST",
-          "headers": {
-            "content-type": "application/json"
-          },
-          "processData": false,
-          "data": `{
+      "async": true,
+      "crossDomain": true,
+      "url": "/getEmployeeData",
+      "method": "POST",
+      "headers": {
+        "content-type": "application/json"
+      },
+      "processData": false,
+      "data": `{\"id\":"${user}"}`
+    }
+
+    $.ajax(settings).done(function (response) {
+      $("#department").val(response[0]['department']),
+        $("#phone").val(response[0]['phone']),
+        $("#address").val(response[0]['address'])
+
+    });
+
+
+    $("#submitbtn").click(function () {
+
+      var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "/updateEmployeeData",
+        "method": "POST",
+        "headers": {
+          "content-type": "application/json"
+        },
+        "processData": false,
+        "data": `{
               "department": "${$("#department").val()}",
               "phone": "${$("#phone").val()}",
               "address": "${$("#address").val()}",
               "id":"${user}"
             }`
-        }
-        console.log(settings);
+      }
+      console.log(settings);
 
-        $.ajax(settings).done(function (response) {
-          console.log(response);
-        });  
+      $.ajax(settings).done(function (response) {
+        console.log(response);
+        alert(JSON.stringify(response));
+      });
+
+    });
+
+
+
+
+
+
 
   });
 
-    
-      
-      
-        
-      
-      
-    });
 </script>
 
-{% if user.is_authenticated %}
-  Hi {{ user.username }}!
-  
-  <br><hr>
-    {% csrf_token %}
-    department : <input type = "text" id="department" name="department"></input> <br><hr>
-    phone : <input type = "text" id="phone" name="phone"></input> <br> <hr>
-    address : <input type = "text" id="address" name="address"></input> <br> <hr>
-    
-    <button id="submitbtn"> send </button>
-  
-  
-  <p><a href="{% url 'logout' %}">logout</a></p>
+{% if user.is_authenticated %} Hi <b> {{ user.username }} </b> !
+<p><a href="{% url 'delete_account' %}"> Delete Account </a></p>
+<br>
+ {% csrf_token %} 
+ 
+ <!--Department : <input type="text" id="department" name="department"></input> <br>
+ Phone : <input type="text" id="phone" name="phone"></input> <br>
+ Address : <input type="text" id="address" name="address"></input> <br>-->
+
+<div class="container">
+        
+        
+            <div class="form-group">
+                <label for="department">Department:</label>
+                <input type="text" class="form-control" id="department" name="department">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone :</label>
+                <input type="text" class="form-control" id="phone"  name="phone">
+            </div>
+            <div class="form-group">
+                <label for="address">Address :</label>
+                <input type="text" class="form-control" id="address"  name="address">
+            </div>
+            <br>
+            <div class="form-group">
+            <p style="display: inline-block"><a href="{% url 'logout' %}">log out</a></p>
+            <button id = "submitbtn" style="color: white;display: inline-block;"id="submit"> Update </button>
+            </div>
+
+</div>
+
+
+
 {% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">login</a>
-{% endif %}
-{% endblock %}
+<p>You are not logged in</p>
+<a href="{% url 'login' %}">login</a> 
+<a href="{% url 'register' %}"> Register </a>
+{% endif %} {% endblock %}
 
 </html>

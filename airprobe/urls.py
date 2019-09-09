@@ -22,10 +22,11 @@ from django.views.decorators.csrf import csrf_exempt
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('get_name', csrf_exempt(views.get_name) , name='get_name'),
+    path('register',csrf_exempt(views.register), name="register"),
     path('', include('usermanagement.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
-    
+    path('delete_account', csrf_exempt(views.delete_account), name='delete_account'),
     
     
 ]
