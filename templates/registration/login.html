@@ -1,14 +1,39 @@
+
 <html>
-  {% extends 'base.html' %} {% block title %}Login{% endblock %} {% block
-  content %}
+<style>  
+.button {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 18px;
+      /*float: right;*/
+    }
+
+    .button:hover {
+      background-color: #45a049;
+      color: white;
+    }
+  </style>
+  {% extends 'base.html' %} {% block title %} Login {% endblock %} 
+  {% block content %}
   <h2>Login</h2>
   <form id="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Login</button>
+    
+    
+    <a style="display: inline-block" class="button" href="{% url 'register' %}"> Register </a>  
+    <a style="display: inline-block;" class="button" href="/admin"> Admin </a>  
+    <button style="display: inline-block" class="button" type="submit">Login</button>
+    
   </form>
+  
   <br />
-  <a href="{% url 'register' %}"> Register </a>
+  
 
   {% endblock %}
 </html>

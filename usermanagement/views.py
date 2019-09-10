@@ -73,5 +73,11 @@ def delete_account(request):
         user = request.user
         print("user", user.username)
         User.objects.get(username=user.username).delete()
-        return HttpResponse("User Deleted Successfully.")
-    return HttpResponse("no user logged in.")
+        res = 'User Deleted Successfully.'
+        return render(request, 'delete.html', {
+        'data': res,
+    })
+    res = 'No user logged in.'
+    return render(request, 'delete.html', {
+        'data': res,
+    })

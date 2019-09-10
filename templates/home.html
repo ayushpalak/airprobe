@@ -1,7 +1,18 @@
 <html>
-  {% extends 'base.html' %} {% block title %}Home{% endblock %} {% block content
-  %}
+  {% extends 'base.html' %} {% block title %} Home {% endblock %} 
+  {% block content %}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <style>
+    .button {
+      background-color: #4caf50;
+          color: white;
+          padding: 12px 20px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          text-decoration: none;
+    }
+ </style>
   <script>
     $(document).ready(function() {
       var user = " {{ user.username }} ";
@@ -54,7 +65,9 @@
   {% if user.is_authenticated %} Hi
   <b> {{ user.username }} </b>
   !
-  <p><a href="{% url 'delete_account' %}"> Delete Account </a></p>
+  <p>
+    
+  </p>
   <br />
   {% csrf_token %}
 
@@ -82,22 +95,28 @@
     </div>
     <br />
     <div class="form-group">
-      <p style="display: inline-block">
-        <a href="{% url 'logout' %}">log out</a>
-      </p>
+      
+        <a style="display: inline-block" class="button" href="{% url 'logout' %}">log out</a>
+        <a class="button" href="{% url 'delete_account' %}">Delete Account</a>  
       <button
         id="submitbtn"
-        style="color: white;display: inline-block;"
+        style="color: white;font-size: 16px;display: inline-block;"
         id="submit"
+        
       >
         Update
       </button>
+      
     </div>
   </div>
 
   {% else %}
+  <h1> Welcome to basic CRUD operation django app. </h1>
+    <h3> Please register yourself to test the  app. </h3>
   <p>You are not logged in</p>
-  <a href="{% url 'login' %}">login</a>
-  <a href="{% url 'register' %}"> Register </a>
+  
+  <a class="button" href="{% url 'login' %}">login</a>
+  <a style="display: inline-block;" class="button" href="/admin"> Admin </a>  
+  <a class="button" href="{% url 'register' %}"> Register </a>
   {% endif %} {% endblock %}
 </html>

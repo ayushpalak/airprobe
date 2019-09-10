@@ -53,13 +53,36 @@
         border: none;
         border-radius: 4px;
         cursor: pointer;
+        
         /*float: right;*/
+      }
+
+      .button {
+        background-color: #4caf50;
+        color: white;
+        padding: 14px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        /*float: right;*/
+      }
+      .button:hover {
+        background-color: #45a049;
+        color: white;
+        text-decoration: none
       }
 
       button:hover {
         background-color: #45a049;
         color: white;
       }
+
+      .container {
+          border-radius: 5px;
+          background-color: #f2f2f2;
+          padding: 20px;
+        }
     </style>
     <title>Register</title>
     <meta charset="utf-8" />
@@ -79,8 +102,9 @@
           var phone = $("#Phone").val();
           var address = $("#Address").val();
           console.log(email, password, department, phone, address);
-
-          var settings = {
+          
+          function submitdata(){ 
+            var settings = {
             async: true,
             crossDomain: true,
             url: "/get_name",
@@ -97,16 +121,29 @@
                 "password" : "${password}"
                     }`
           };
-
-          $.ajax(settings).done(function(response) {
+            $.ajax(settings).done(function(response) {
             console.log(response);
             if (!response.hasOwnProperty("error")) {
               window.location = "/accounts/login/";
             } else {
               alert(JSON.stringify(response["error"]));
             }
-          });
-        });
+            });
+          }
+
+          if(phone.length && email.length && password.length && department.length && address.length){
+              var regex=/^[0-9]{10}$/;
+              if (!phone.match(regex)){
+                alert("must be 10 digit number.");
+                return false;
+              }
+              
+              submitdata();
+          }else{
+            alert("Enter all the fields.")
+          }
+
+        }); 
       });
     </script>
   </head>
@@ -116,9 +153,9 @@
       <h2>Registration form</h2>
 
       <div class="form-group">
-        <label for="Email">Email:</label>
+        <label for="Email">Username:</label>
         <input
-          type="email"
+          type="text"
           class="form-control"
           id="Email"
           placeholder="Enter email"
@@ -148,7 +185,7 @@
       <div class="form-group">
         <label for="Phone">Phone:</label>
         <input
-          type="text"
+          type="number"
           class="form-control"
           id="Phone"
           placeholder="Enter Phone"
@@ -165,7 +202,7 @@
           name="Address"
         />
       </div>
-
+      <a class="button" href="{% url 'login' %}">Cancel</a>
       <button style="color: white;" id="submit">Submit</button>
     </div>
   </body>
