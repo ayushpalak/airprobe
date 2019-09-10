@@ -10,13 +10,13 @@ def get_name(request):
         user = None
         if request.method == 'POST':
             received_json_data = json.loads(request.body.decode("utf-8"))
-            print(received_json_data)
+            # print(received_json_data)
             email = received_json_data["email"]
             department = received_json_data["department"]
             phone = received_json_data["phone"]
             address = received_json_data["address"]
             password = received_json_data["password"]
-            print(department)
+            # print(department)
 
             user = User.objects.create_user(email, email, password)
             user.save()
@@ -38,7 +38,7 @@ def getEmployeeData(request):
     try:
         received_json_data = json.loads(request.body.decode("utf-8"))
         id = received_json_data["id"]
-        print("id", id)
+        # print("id", id)
         e = Employee.objects.filter(email=id.strip()).values()
         return JsonResponse(list(e), safe=False)
     except Exception as e:
@@ -71,7 +71,7 @@ def delete_account(request):
     user = None
     if request.user.is_authenticated:
         user = request.user
-        print("user", user.username)
+        # print("user", user.username)
         User.objects.get(username=user.username).delete()
         res = 'User Deleted Successfully.'
         return render(request, 'delete.html', {

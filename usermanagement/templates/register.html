@@ -101,7 +101,7 @@
           var department = $("#Department").val();
           var phone = $("#Phone").val();
           var address = $("#Address").val();
-          console.log(email, password, department, phone, address);
+          
           
           function submitdata(){ 
             var settings = {
@@ -122,7 +122,7 @@
                     }`
           };
             $.ajax(settings).done(function(response) {
-            console.log(response);
+            
             if (!response.hasOwnProperty("error")) {
               window.location = "/accounts/login/";
             } else {
